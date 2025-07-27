@@ -16,6 +16,7 @@ public class Celda {
     /**
      * Constructor para crear una nueva celda.
      *
+     *
      * @param fila La coordenada de la fila de la celda.
      * @param columna La coordenada de la columna de la celda.
      * @param transitable Un valor booleano que indica si la celda es transitable ({@code true}) o un muro ({@code false}).
