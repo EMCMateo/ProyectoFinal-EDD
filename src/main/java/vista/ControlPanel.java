@@ -1,4 +1,3 @@
-// /src/main/java/vista/ControlPanel.java
 package vista;
 
 import javax.swing.*;
@@ -12,6 +11,11 @@ import java.awt.event.ActionListener;
  *
  * @author Israel Orellana
  * @version 1.1
+ * Panel que contiene todos los controles de la aplicación: configuración del tamaño,
+ * selección de algoritmo, botón para resolver y área de resultados.
+ *
+ * @author Israel Orellana
+ * @version 1.0
  */
 public class ControlPanel extends JPanel {
     private JComboBox<String> algorithmSelector;
@@ -90,6 +94,7 @@ public class ControlPanel extends JPanel {
      * Obtiene el número de filas introducido por el usuario.
      *
      * @return El número de filas como un entero. Devuelve 20 si la entrada es inválida.
+     * @return El número de filas como un entero.
      */
     public int getRows() {
         try {
@@ -103,6 +108,7 @@ public class ControlPanel extends JPanel {
      * Obtiene el número de columnas introducido por el usuario.
      *
      * @return El número de columnas como un entero. Devuelve 20 si la entrada es inválida.
+     * @return El número de columnas como un entero.
      */
     public int getCols() {
         try {
@@ -115,6 +121,7 @@ public class ControlPanel extends JPanel {
     /**
      * Obtiene el nombre del algoritmo seleccionado por el usuario en el JComboBox.
      *
+     * Obtiene el nombre del algoritmo seleccionado por el usuario.
      * @return El algoritmo seleccionado como un String.
      */
     public String getSelectedAlgorithm() {
@@ -134,6 +141,7 @@ public class ControlPanel extends JPanel {
      * Añade un listener para el evento de clic en el botón "Generar/Limpiar".
      *
      * @param listener El ActionListener a ejecutar cuando se presiona el botón.
+     * @param listener El ActionListener a ejecutar.
      */
     public void addGenerateListener(ActionListener listener) {
         generateButton.addActionListener(listener);

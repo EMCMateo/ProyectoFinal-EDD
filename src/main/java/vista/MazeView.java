@@ -69,6 +69,7 @@ public class MazeView extends JFrame {
     }
 
     // --- MÉTODOS PARA QUE EL CONTROLADOR MUESTRE VENTANAS SECUNDARIAS ---
+    // --- Métodos públicos para que el Controlador actualice la vista --
 
     /**
      * Crea y muestra una ventana de diálogo modal con la tabla de resultados.
