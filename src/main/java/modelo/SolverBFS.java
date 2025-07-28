@@ -11,13 +11,26 @@ import java.util.Collections;
  * para encontrar la ruta más corta en un laberinto.
  *
  * @author Juan Pablo Ortiz
- * @version 1.0
+ * @version 1.1
  */
 public class SolverBFS {
 
     // Movimientos para 4 direcciones: arriba, abajo, izquierda, derecha
     private static final int[] dx = {-1, 1, 0, 0};
     private static final int[] dy = {0, 0, -1, 1};
+
+    /** Lista que almacena el orden en que las celdas fueron visitadas para el recorrido. */
+    private List<Celda> recorrido;
+
+    /**
+     * Devuelve la lista de celdas visitadas en el orden de exploración.
+     * Esta lista puede ser utilizada por el controlador para animar el proceso de búsqueda.
+     *
+     * @return Una lista de celdas que representa el recorrido completo del algoritmo.
+     */
+    public List<Celda> getRecorrido() {
+        return recorrido;
+    }
 
     /**
      * Busca la ruta más corta desde un punto de inicio hasta un punto de destino
@@ -35,15 +48,19 @@ public class SolverBFS {
         Queue<Celda> cola = new LinkedList<>();
         boolean[][] visitado = new boolean[laberinto.getFilas()][laberinto.getColumnas()];
         Celda[][] predecesor = new Celda[laberinto.getFilas()][laberinto.getColumnas()];
+        this.recorrido = new ArrayList<>(); // Inicializar la lista de recorrido al inicio de la búsqueda
 
         cola.add(inicio);
         visitado[inicio.getFila()][inicio.getColumna()] = true;
+        this.recorrido.add(inicio); // Añadir el inicio al recorrido
 
         while (!cola.isEmpty()) {
             Celda actual = cola.poll();
 
             // Usamos las coordenadas para la comparación de celdas
             if (actual.getFila() == fin.getFila() && actual.getColumna() == fin.getColumna()) {
+                // Al encontrar la solución, añadimos el destino al recorrido
+                this.recorrido.add(fin);
                 return reconstruirRuta(predecesor, inicio, fin);
             }
 
@@ -56,6 +73,7 @@ public class SolverBFS {
                     visitado[nuevaFila][nuevaColumna] = true;
                     predecesor[nuevaFila][nuevaColumna] = actual;
                     cola.add(vecino);
+                    this.recorrido.add(vecino); // Añadir la celda visitada al recorrido
                 }
             }
         }
