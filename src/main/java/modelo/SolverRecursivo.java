@@ -35,7 +35,7 @@ public class SolverRecursivo {
     private boolean[][] visitado;
     private List<int[]> rutaActual;
     private List<int[]> mejorRuta;
-    private List<int[]> celdasVisitadas; // Guarda TODAS las celdas exploradas
+    private List<int[]> celdasVisitadas = new ArrayList<>(); // Guarda TODAS las celdas exploradas
 
     /**
      * Inicializa las variables de estado antes de cada búsqueda.
@@ -57,7 +57,7 @@ public class SolverRecursivo {
      * @return Una lista de coordenadas [fila, columna].
      */
     public List<int[]> getCeldasVisitadas() {
-        return this.celdasVisitadas;
+        return celdasVisitadas;
     }
 
     /**

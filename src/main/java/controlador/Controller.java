@@ -98,6 +98,18 @@ public class Controller {
                 visitedCells = convertCeldaPathToIntArrayPath(bfs.getRecorrido());
                 break;
 
+            case "Recursivo (2 dir)":
+                if (endPoint.y < startPoint.y || endPoint.x < startPoint.x) {
+                    path = new ArrayList<>();
+                    visitedCells = new ArrayList<>();
+                    view.showError("El método recursivo de 2 direcciones solo funciona si el destino está a la derecha y abajo del inicio.");
+                } else {
+                    SolverRecursivo rec2 = new SolverRecursivo();
+                    path = rec2.resolver2Direcciones(mazeData, startPoint.y, startPoint.x, endPoint.y, endPoint.x);
+                    visitedCells = rec2.getCeldasVisitadas();
+                }
+                break;
+
             case "DFS":
                 SolverDFS dfs = new SolverDFS();
                 path = convertCeldaPathToIntArrayPath(dfs.buscarRuta(laberinto, inicio, fin));
