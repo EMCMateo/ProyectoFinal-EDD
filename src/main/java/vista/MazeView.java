@@ -49,7 +49,7 @@ public class MazeView extends JFrame {
             int cols = controlPanel.getCols();
             mazePanel.setMazeData(new int[rows][cols]); // Crea una nueva matriz
             mazePanel.clearMaze(); // Limpia todo
-            pack(); // Reajusta el tamaño de la ventana
+            pack(); // Ajusta el tamaño de la ventana
         });
 
         // Acción para el botón "¡Resolver!"
