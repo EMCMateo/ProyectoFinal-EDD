@@ -12,11 +12,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * El controlador principal de la aplicación. Conecta la Vista (MazeView)
- * con el Modelo (los algoritmos de resolución de laberintos).
+ * Controlador principal de la aplicación de laberintos.
+ * Implementa el patrón MVC (Modelo-Vista-Controlador) gestionando la interacción
+ * entre la interfaz gráfica y los algoritmos de resolución.
  *
- * @author Einar Kaalhus
- * @version 1.2 - Añadido manejo de estado para visualización completa y paso a paso.
+ * Responsabilidades:
+ * <ul>
+ *   <li>Gestiona eventos de la interfaz de usuario</li>
+ *   <li>Coordina la ejecución de algoritmos de búsqueda</li>
+ *   <li>Registra resultados en CSV para análisis</li>
+ *   <li>Maneja la validación de datos y errores</li>
+ *   <li>Actualiza la vista con los resultados</li>
+ * </ul>
+ *
  */
 public class Controller {
     private final MazeView view;
@@ -138,7 +146,7 @@ public class Controller {
         csvLogger.logResult(algorithm, success, path.size(), durationMs);
     }
 
-    // --- NUEVO: Método para el botón "Mostrar Camino Completo" ---
+    // Método para el botón "Mostrar Camino Completo" ---
     private void showFullPath() {
         if (lastVisitedCells == null) {
             view.showError("Primero debes resolver el laberinto con el botón '¡Resolver!'.");
@@ -147,7 +155,7 @@ public class Controller {
         view.getMazePanel().drawFullPath(lastVisitedCells, lastFinalPath);
     }
 
-    // --- NUEVO: Método para el botón "Resolver Paso a Paso" ---
+    //  Método para el botón "Resolver Paso a Paso" ---
     private void showNextStep() {
         if (lastFinalPath == null) {
             view.showError("Primero debes resolver el laberinto con el botón '¡Resolver!'.");

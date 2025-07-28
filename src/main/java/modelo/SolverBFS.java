@@ -7,11 +7,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Clase que implementa el algoritmo de Búsqueda en Amplitud (BFS)
- * para encontrar la ruta más corta en un laberinto.
+ * Implementa el algoritmo de búsqueda en anchura (Breadth-First Search)
+ * para encontrar el camino más corto en el laberinto.
  *
- * @author Juan Pablo Ortiz
- * @version 1.1
+ * Características:
+ * <ul>
+ *   <li>Garantiza encontrar el camino más corto si existe</li>
+ *   <li>Utiliza una cola para explorar el laberinto nivel por nivel</li>
+ *   <li>Mantiene un registro de celdas visitadas</li>
+ *   <li>Construye el camino desde el destino hacia el inicio</li>
+ * </ul>
+ *
  */
 public class SolverBFS {
 

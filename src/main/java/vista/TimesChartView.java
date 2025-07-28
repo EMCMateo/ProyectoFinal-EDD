@@ -13,14 +13,24 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Una ventana de diálogo (JDialog) para mostrar la gráfica de comparación de tiempos.
- * <p>
- * Actualmente, esta clase actúa como un <b>placeholder</b>, mostrando un mensaje
- * de texto. En una futura implementación, podría integrarse con una librería
- * de gráficos como JFreeChart para visualizar los datos de rendimiento.
+ * Ventana de diálogo que muestra una gráfica de líneas comparando los tiempos
+ * de ejecución de los diferentes algoritmos de búsqueda en el laberinto.
  *
- * @author Israel Orellana
- * @version 1.1
+ * Características:
+ * <ul>
+ *   <li>Lee datos del archivo CSV de resultados</li>
+ *   <li>Genera gráfica de líneas usando JFreeChart</li>
+ *   <li>Muestra diferentes algoritmos con colores distintos</li>
+ *   <li>Permite comparar rendimiento visual y numéricamente</li>
+ * </ul>
+ *
+ * La gráfica muestra:
+ * <ul>
+ *   <li>Eje X: Timestamp de ejecución</li>
+ *   <li>Eje Y: Tiempo de ejecución en milisegundos</li>
+ *   <li>Leyenda: Identificación de algoritmos</li>
+ * </ul>
+ *
  */
 public class TimesChartView extends JDialog {
 

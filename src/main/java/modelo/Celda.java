@@ -1,12 +1,18 @@
 package modelo;
 
 /**
- * Representa una celda individual dentro del laberinto.
- * Cada celda se define por sus coordenadas (fila y columna) y un estado que
- * indica si es transitable (parte del camino) o un muro.
+ * Representa una celda individual en el laberinto.
+ * Cada celda tiene una posición (fila, columna) y puede ser transitable o un muro.
+ * Se utiliza como componente básico para construir el laberinto y para los algoritmos
+ * de búsqueda de caminos.
  *
- * @author Juan Pablo Ortiz
- * @version 1.0
+ * Características:
+ * <ul>
+ *   <li>Mantiene su posición en el laberinto (fila, columna)</li>
+ *   <li>Puede ser marcada como muro o celda transitable</li>
+ *   <li>Implementa equals y hashCode para su uso en colecciones</li>
+ *   <li>Proporciona métodos de acceso a sus propiedades</li>
+ * </ul>
  */
 public class Celda {
     private int fila;

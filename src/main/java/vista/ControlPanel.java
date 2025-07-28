@@ -6,16 +6,19 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Panel que contiene todos los controles de la aplicación: configuración del
- * tamaño, selección de algoritmo, botones de acción y área de resultados.
+ * Panel de control que contiene todos los elementos interactivos de la interfaz.
+ * Gestiona la configuración del laberinto y los controles de algoritmos.
  *
- * @author Israel Orellana
- * @version 1.1
- * Panel que contiene todos los controles de la aplicación: configuración del tamaño,
- * selección de algoritmo, botón para resolver y área de resultados.
+ * Componentes principales:
+ * <ul>
+ *   <li>Selector de tamaño del laberinto (filas y columnas)</li>
+ *   <li>Selector de algoritmo a utilizar</li>
+ *   <li>Botones de acción (resolver, mostrar camino, paso a paso)</li>
+ *   <li>Área de resultados para mostrar estadísticas</li>
+ *   <li>Botón de limpieza general</li>
+ * </ul>
  *
- * @author Israel Orellana
- * @version 1.0
+ * @version 2.0
  */
 public class ControlPanel extends JPanel {
     private JComboBox<String> algorithmSelector;
@@ -37,14 +40,14 @@ public class ControlPanel extends JPanel {
         // Configuración del layout principal del panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        setPreferredSize(new Dimension(250, 0)); // Un poco más ancho para el texto de los botones
+        setPreferredSize(new Dimension(250, 600)); // Aumentamos la altura preferida
 
         // --- Panel de configuración ---
         JPanel configPanel = new JPanel(new GridLayout(0, 2, 5, 5));
         configPanel.setBorder(new TitledBorder("Configuración"));
 
-        rowsField = new JTextField("8");
-        colsField = new JTextField("8");
+        rowsField = new JTextField("5");
+        colsField = new JTextField("5");
         generateButton = new JButton("Generar/Limpiar");
 
         configPanel.add(new JLabel("Filas:"));
@@ -55,7 +58,7 @@ public class ControlPanel extends JPanel {
         configPanel.add(new JLabel()); // Espacio vacío para alinear
         add(configPanel);
 
-        add(Box.createRigidArea(new Dimension(0, 20)));
+        add(Box.createRigidArea(new Dimension(0, 10)));
 
         // --- Panel de selección de algoritmo y acciones ---
         JPanel algoPanel = new JPanel(new BorderLayout(5, 5));
@@ -64,9 +67,9 @@ public class ControlPanel extends JPanel {
         algorithmSelector = new JComboBox<>(algorithms);
         algoPanel.add(algorithmSelector, BorderLayout.NORTH);
 
-        // --- Panel para agrupar los tres botones de acción ---
-        JPanel actionButtonsPanel = new JPanel(new GridLayout(0, 1, 5, 5)); // Layout para apilar botones
-        solveButton = new JButton("¡Resolver!"); // Botón original
+        // --- Panel para agrupar los botones de acción ---
+        JPanel actionButtonsPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+        solveButton = new JButton("¡Resolver!");
         showFullPathButton = new JButton("Mostrar Camino Completo");
         stepByStepButton = new JButton("Resolver Paso a Paso");
         clearAllButton = new JButton("Borrar Todo");
@@ -76,19 +79,25 @@ public class ControlPanel extends JPanel {
         actionButtonsPanel.add(stepByStepButton);
         actionButtonsPanel.add(clearAllButton);
 
-        algoPanel.add(actionButtonsPanel, BorderLayout.CENTER); // Se añaden al centro
-
+        algoPanel.add(actionButtonsPanel, BorderLayout.CENTER);
         add(algoPanel);
 
-        add(Box.createRigidArea(new Dimension(0, 20)));
+        add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // --- Panel de resultados ---
+        // --- Panel de resultados con scroll ---
         JPanel resultsPanel = new JPanel(new BorderLayout());
         resultsPanel.setBorder(new TitledBorder("Resultados"));
-        resultsArea = new JTextArea(10, 15);
+        resultsArea = new JTextArea(8, 15); // Aumentamos las filas visibles
         resultsArea.setEditable(false);
-        resultsPanel.add(new JScrollPane(resultsArea));
+        resultsArea.setLineWrap(true);
+        resultsArea.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(resultsArea);
+        scrollPane.setPreferredSize(new Dimension(200, 150)); // Aseguramos un tamaño mínimo
+        resultsPanel.add(scrollPane);
         add(resultsPanel);
+
+        // Añadimos un panel de relleno que puede expandirse
+        add(Box.createVerticalGlue());
     }
 
     // --- Métodos públicos para que otros (la Vista o el Controlador) interactúen con este panel ---

@@ -1,12 +1,18 @@
 package modelo;
 
 /**
- * Representa la estructura del laberinto como una matriz de objetos {@link Celda}.
- * Esta clase se encarga de la gestión de las celdas, el establecimiento de muros
- * y la provisión de información sobre las dimensiones del laberinto.
+ * Representa la estructura completa del laberinto.
+ * Mantiene una matriz de celdas y proporciona métodos para manipular
+ * y consultar el estado del laberinto.
  *
- * @author Juan Pablo Ortiz
- * @version 1.0
+ * Características:
+ * <ul>
+ *   <li>Gestiona una matriz bidimensional de celdas</li>
+ *   <li>Permite colocar y quitar muros</li>
+ *   <li>Provee acceso a celdas individuales</li>
+ *   <li>Permite convertir el laberinto a formato de matriz de enteros</li>
+ * </ul>
+ *
  */
 public class Laberinto {
     private Celda[][] matriz;

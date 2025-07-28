@@ -8,9 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Panel que dibuja el laberinto y gestiona múltiples modos de visualización.
+ * MazePanel es un JPanel personalizado que representa visualmente un laberinto.
+ * Permite la interacción del usuario para definir muros, punto de inicio y fin,
+ * y muestra rutas de solución y animaciones paso a paso.
  *
- * @author Israel Orellana
+ * Funcionalidades principales:
+ * <ul>
+ *   <li>Dibujo de celdas transitables y muros.</li>
+ *   <li>Selección de punto de inicio (clic derecho) y fin (Shift + clic izquierdo).</li>
+ *   <li>Colocación y eliminación de muros (clic izquierdo).</li>
+ *   <li>Visualización de rutas de solución y nodos visitados.</li>
+ *   <li>Animación paso a paso de la solución.</li>
+ * </ul>
+ *
  * @version 1.2 - Añadida lógica para visualización completa y paso a paso manual.
  */
 public class MazePanel extends JPanel {
@@ -42,7 +52,31 @@ public class MazePanel extends JPanel {
     }
 
     private void addMouseListeners() {
-        // ... (tu código de MouseListeners no necesita cambios)
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int col = e.getX() / CELL_SIZE;
+                int row = e.getY() / CELL_SIZE;
+                if (row >= rows || col >= cols) return;
+                // Solo permitir inicio/fin en celdas transitables
+                if (e.isShiftDown() && SwingUtilities.isLeftMouseButton(e)) {
+                    if (mazeData[row][col] == 1) {
+                        endPoint = new Point(col, row);
+                    } else {
+                        JOptionPane.showMessageDialog(MazePanel.this, "El punto de fin debe estar en una celda transitable.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else if (SwingUtilities.isRightMouseButton(e)) {
+                    if (mazeData[row][col] == 1) {
+                        startPoint = new Point(col, row);
+                    } else {
+                        JOptionPane.showMessageDialog(MazePanel.this, "El punto de inicio debe estar en una celda transitable.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else if (SwingUtilities.isLeftMouseButton(e)) {
+                    mazeData[row][col] = (mazeData[row][col] == 1) ? 0 : 1;
+                }
+                repaint();
+            }
+        });
     }
 
     @Override
@@ -182,9 +216,23 @@ public class MazePanel extends JPanel {
         this.rows = mazeData.length;
         this.cols = mazeData[0].length;
         this.mazeData = mazeData;
-        setPreferredSize(new Dimension(cols * CELL_SIZE, rows * CELL_SIZE));
-        revalidate();
+        updatePreferredSize();
         repaint();
+    }
+
+    private void updatePreferredSize() {
+        int width = cols * CELL_SIZE;
+        int height = rows * CELL_SIZE;
+        setPreferredSize(new Dimension(width, height));
+        revalidate(); // Fuerza el recálculo del layout
+        Container parent = getParent();
+        if (parent != null) {
+            parent.revalidate(); // Notifica al contenedor padre
+            Window window = SwingUtilities.getWindowAncestor(this);
+            if (window != null) {
+                window.pack(); // Ajusta el tamaño de la ventana
+            }
+        }
     }
 
     public int[][] getMazeData() { return mazeData; }

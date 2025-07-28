@@ -4,11 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase que implementa algoritmos recursivos (backtracking) para encontrar
- * rutas en un laberinto. Ha sido refactorizada para manejar correctamente el
- * estado y registrar todas las celdas visitadas durante la exploración.
+ * Implementa soluciones recursivas para encontrar caminos en el laberinto.
+ * Incluye tres variantes de algoritmos recursivos:
+ * <ul>
+ *   <li>Recursivo de 2 direcciones (solo derecha y abajo)</li>
+ *   <li>Recursivo de 4 direcciones (todas las direcciones)</li>
+ *   <li>Backtracking con optimización para encontrar el camino más corto</li>
+ * </ul>
  *
- * @version 1.1
+ * Características principales:
+ * <ul>
+ *   <li>Usa técnicas de backtracking para explorar caminos</li>
+ *   <li>Implementa poda para optimizar la búsqueda</li>
+ *   <li>Mantiene registro de celdas visitadas para evitar ciclos</li>
+ *   <li>Incluye versión con memoización para mejorar rendimiento</li>
+ * </ul>
+ *
  */
 public class SolverRecursivo {
 

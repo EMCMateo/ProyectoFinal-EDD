@@ -28,3 +28,6 @@ Timestamp,Algorithm,PathFound,PathLength,ExecutionTime(ms)
 2025-07-28 12:53:46,DFS,true,9,12.2444
 2025-07-28 12:53:58,DFS,true,9,0.1784
 2025-07-28 12:54:01,BFS,true,9,0.0835
+2025-07-28 16:15:56,BFS,true,9,6.1910
+2025-07-28 16:16:05,BFS,true,9,0.2569
+2025-07-28 16:16:09,BFS,true,9,0.2163

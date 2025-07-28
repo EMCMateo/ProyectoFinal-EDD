@@ -6,11 +6,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Clase que implementa el algoritmo de Búsqueda en Profundidad (DFS)
- * para encontrar una ruta en un laberinto.
+ * Implementa el algoritmo de búsqueda en profundidad (Depth-First Search)
+ * para encontrar un camino en el laberinto.
  *
- * @author Juan Pablo Ortiz
- * @version 1.1
+ * Características:
+ * <ul>
+ *   <li>Explora el laberinto siguiendo una rama hasta el final antes de retroceder</li>
+ *   <li>Utiliza una pila (implícita en la recursión) para la exploración</li>
+ *   <li>Mantiene un registro de celdas visitadas</li>
+ *   <li>No garantiza encontrar el camino más corto</li>
+ * </ul>
+ *
  */
 public class SolverDFS {
 

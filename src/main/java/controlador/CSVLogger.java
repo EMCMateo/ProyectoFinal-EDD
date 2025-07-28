@@ -10,11 +10,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 /**
- * Una clase de utilidad para registrar los resultados de la ejecución
- * de los algoritmos en un archivo CSV.
+ * Clase utilitaria para registrar los resultados de las ejecuciones de los algoritmos
+ * en un archivo CSV. Mantiene un historial de todas las soluciones intentadas.
  *
- * @author Einar Kaalhus
- * @version 1.0
+ * Características:
+ * <ul>
+ *   <li>Registra timestamp, algoritmo usado, éxito/fracaso y tiempo de ejecución</li>
+ *   <li>Crea el archivo si no existe y añade encabezados</li>
+ *   <li>Maneja escritura segura con manejo de recursos</li>
+ *   <li>Permite análisis posterior de rendimiento</li>
+ * </ul>
+ *
+ * El formato del CSV es:
+ * Timestamp,Algorithm,PathFound,PathLength,ExecutionTime(ms)
+ *
  */
 public class CSVLogger {
     private final String filePath;

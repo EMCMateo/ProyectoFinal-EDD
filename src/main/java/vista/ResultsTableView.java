@@ -9,11 +9,18 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Una ventana de diálogo (JDialog) que muestra los resultados de los laberintos
- * leídos desde un archivo CSV en una tabla (JTable).
+ * Ventana de diálogo que muestra una tabla con el historial de resultados
+ * de los algoritmos ejecutados. Lee los datos desde el archivo CSV y los
+ * presenta en un formato tabular fácil de leer.
  *
- * @author Israel Orellana
- * @version 1.1
+ * Características:
+ * <ul>
+ *   <li>Muestra timestamp, algoritmo, éxito y tiempo de ejecución</li>
+ *   <li>Permite ordenar por cualquier columna</li>
+ *   <li>Implementa scroll para manejar muchos registros</li>
+ *   <li>Actualiza la vista al abrirse</li>
+ * </ul>
+ *
  */
 public class ResultsTableView extends JDialog {
 

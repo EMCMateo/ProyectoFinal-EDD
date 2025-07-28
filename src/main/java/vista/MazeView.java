@@ -7,13 +7,18 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * La ventana principal (JFrame) de la aplicación.
+ * MazeView es la ventana principal (JFrame) de la aplicación de laberintos.
  * Ensambla el MazePanel (lienzo), el ControlPanel (botones) y la barra de menú.
- * Proporciona métodos para que el Controlador interactúe con la vista,
- * siguiendo el patrón Modelo-Vista-Controlador (MVC).
+ * Permite la interacción entre el usuario y el controlador siguiendo el patrón MVC.
  *
- * @author Israel Orellana
- * @version 1.1
+ * Funcionalidades principales:
+ * <ul>
+ *   <li>Contiene y organiza los paneles de laberinto y control.</li>
+ *   <li>Proporciona métodos para mostrar resultados, errores y gráficas.</li>
+ *   <li>Permite al controlador añadir listeners a los botones y menús.</li>
+ *   <li>Gestiona la visualización de rutas y resultados.</li>
+ * </ul>
+ *
  */
 public class MazeView extends JFrame {
 
@@ -32,19 +37,25 @@ public class MazeView extends JFrame {
         setTitle("Solucionador de Laberintos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
-        setSize(500, 800);
 
         // 1. Crear la barra de menú
         createMenuBar();
 
         // 2. Crear instancias de los paneles
-        mazePanel = new MazePanel(8, 8);
+        mazePanel = new MazePanel(5, 5);
         controlPanel = new ControlPanel();
 
-        // 3. Añadirlos a la ventana
-        add(mazePanel, BorderLayout.CENTER);
+        // Panel contenedor con scroll para el laberinto
+        JScrollPane scrollPane = new JScrollPane(mazePanel);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        // 3. Añadir los paneles a la ventana
+        add(scrollPane, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.EAST);
 
+        // Establecer un tamaño mínimo para la ventana
+        setMinimumSize(new Dimension(600, 400));
         pack();
         setLocationRelativeTo(null);
         // NOTA: setVisible(true) es llamado por la clase App, no aquí.
