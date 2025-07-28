@@ -7,9 +7,11 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Panel que contiene todos los controles de la aplicación:
- * configuración del tamaño, selección de algoritmo y botón para resolver.
- * También muestra el área de resultados.
+ * Panel que contiene todos los controles de la aplicación: configuración del
+ * tamaño, selección de algoritmo, botones de acción y área de resultados.
+ *
+ * @author Israel Orellana
+ * @version 1.1
  */
 public class ControlPanel extends JPanel {
     private JComboBox<String> algorithmSelector;
@@ -17,13 +19,20 @@ public class ControlPanel extends JPanel {
     private JTextField rowsField;
     private JTextField colsField;
     private JButton generateButton;
-    private JButton solveButton;
 
+    private JButton solveButton;
+    private JButton showFullPathButton;
+    private JButton stepByStepButton;
+
+    /**
+     * Construye el panel de control, inicializando y organizando todos
+     * sus componentes de interfaz.
+     */
     public ControlPanel() {
         // Configuración del layout principal del panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        setPreferredSize(new Dimension(200, 0)); // Ancho preferido
+        setPreferredSize(new Dimension(250, 0)); // Un poco más ancho para el texto de los botones
 
         // --- Panel de configuración ---
         JPanel configPanel = new JPanel(new GridLayout(0, 2, 5, 5));
@@ -43,15 +52,25 @@ public class ControlPanel extends JPanel {
 
         add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // --- Panel de selección de algoritmo ---
+        // --- Panel de selección de algoritmo y acciones ---
         JPanel algoPanel = new JPanel(new BorderLayout(5, 5));
-        algoPanel.setBorder(new TitledBorder("Algoritmo"));
+        algoPanel.setBorder(new TitledBorder("Algoritmo y Acciones"));
         String[] algorithms = {"BFS", "DFS", "Recursivo (2 dir)", "Recursivo (4 dir)", "Backtracking"};
         algorithmSelector = new JComboBox<>(algorithms);
-        solveButton = new JButton("¡Resolver!");
-
         algoPanel.add(algorithmSelector, BorderLayout.NORTH);
-        algoPanel.add(solveButton, BorderLayout.SOUTH);
+
+        // --- Panel para agrupar los tres botones de acción ---
+        JPanel actionButtonsPanel = new JPanel(new GridLayout(0, 1, 5, 5)); // Layout para apilar botones
+        solveButton = new JButton("¡Resolver!"); // Botón original
+        showFullPathButton = new JButton("Mostrar Camino Completo");
+        stepByStepButton = new JButton("Resolver Paso a Paso");
+
+        actionButtonsPanel.add(solveButton);
+        actionButtonsPanel.add(showFullPathButton);
+        actionButtonsPanel.add(stepByStepButton);
+
+        algoPanel.add(actionButtonsPanel, BorderLayout.CENTER); // Se añaden al centro
+
         add(algoPanel);
 
         add(Box.createRigidArea(new Dimension(0, 20)));
@@ -67,6 +86,11 @@ public class ControlPanel extends JPanel {
 
     // --- Métodos públicos para que otros (la Vista o el Controlador) interactúen con este panel ---
 
+    /**
+     * Obtiene el número de filas introducido por el usuario.
+     *
+     * @return El número de filas como un entero. Devuelve 20 si la entrada es inválida.
+     */
     public int getRows() {
         try {
             return Integer.parseInt(rowsField.getText());
@@ -75,6 +99,11 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    /**
+     * Obtiene el número de columnas introducido por el usuario.
+     *
+     * @return El número de columnas como un entero. Devuelve 20 si la entrada es inválida.
+     */
     public int getCols() {
         try {
             return Integer.parseInt(colsField.getText());
@@ -83,19 +112,57 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    /**
+     * Obtiene el nombre del algoritmo seleccionado por el usuario en el JComboBox.
+     *
+     * @return El algoritmo seleccionado como un String.
+     */
     public String getSelectedAlgorithm() {
         return (String) algorithmSelector.getSelectedItem();
     }
 
+    /**
+     * Establece el texto que se mostrará en el área de resultados.
+     *
+     * @param text El texto a mostrar.
+     */
     public void setResultsText(String text) {
         resultsArea.setText(text);
     }
 
+    /**
+     * Añade un listener para el evento de clic en el botón "Generar/Limpiar".
+     *
+     * @param listener El ActionListener a ejecutar cuando se presiona el botón.
+     */
     public void addGenerateListener(ActionListener listener) {
         generateButton.addActionListener(listener);
     }
 
+    /**
+     * Añade un listener para el evento de clic en el botón "¡Resolver!".
+     *
+     * @param listener El ActionListener a ejecutar.
+     */
     public void addSolveListener(ActionListener listener) {
         solveButton.addActionListener(listener);
+    }
+
+    /**
+     * Añade un listener para el evento de clic en el botón "Mostrar Camino Completo".
+     *
+     * @param listener El ActionListener a ejecutar.
+     */
+    public void addShowFullPathListener(ActionListener listener) {
+        showFullPathButton.addActionListener(listener);
+    }
+
+    /**
+     * Añade un listener para el evento de clic en el botón "Resolver Paso a Paso".
+     *
+     * @param listener El ActionListener a ejecutar.
+     */
+    public void addStepByStepListener(ActionListener listener) {
+        stepByStepButton.addActionListener(listener);
     }
 }

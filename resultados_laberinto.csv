@@ -3,3 +3,8 @@ Timestamp,Algorithm,PathFound,PathLength,ExecutionTime(ms)
 2025-07-27 23:11:38,BFS,true,13,1.7929
 2025-07-27 23:11:41,Recursivo (2 dir),false,0,1.0392
 2025-07-27 23:11:47,Backtracking,true,13,58.1944
+2025-07-28 08:29:56,BFS,true,15,8.1592
+2025-07-28 09:07:00,BFS,true,21,7.9406
+2025-07-28 09:07:58,BFS,false,0,0.6336
+2025-07-28 09:11:37,BFS,true,18,4.2405
+2025-07-28 09:11:39,BFS,true,18,1.4152
