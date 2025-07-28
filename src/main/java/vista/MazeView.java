@@ -1,4 +1,4 @@
-// /src/main/java/vista/MazeView.java
+
 package vista;
 
 import javax.swing.*;
