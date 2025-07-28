@@ -34,6 +34,9 @@ public class Controller {
         // La vista ya no maneja la lógica, solo notifica al controlador.
         view.getControlPanel().addGenerateListener(e -> generateNewMaze());
         view.getControlPanel().addSolveListener(e -> solveMaze());
+
+        view.addListResultsListener(e -> view.showResultsTable());
+        view.addShowTimesChartListener(e -> view.showTimesChart());
     }
 
     /**
