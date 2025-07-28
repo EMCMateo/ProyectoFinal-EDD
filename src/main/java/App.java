@@ -1,6 +1,8 @@
 import controlador.Controller;
+import modelo.SolverRecursivo;
 import vista.MazeView;
 import javax.swing.SwingUtilities;
+import java.util.List;
 
 /**
  * Clase principal que inicia la aplicación del solucionador de laberintos.
@@ -13,6 +15,9 @@ import javax.swing.SwingUtilities;
 public class App {
 
     public static void main(String[] args) {
+
+
+
         // SwingUtilities.invokeLater asegura que la creación de la GUI
         // se ejecute en el Event Dispatch Thread (EDT), lo cual es
         // la práctica recomendada para evitar problemas de concurrencia en Swing.

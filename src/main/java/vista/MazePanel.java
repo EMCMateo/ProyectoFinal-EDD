@@ -68,15 +68,27 @@ public class MazePanel extends JPanel {
 
                 if (row >= rows || col >= cols) return; // Fuera de los límites
 
-                // Lógica de Clic: Se comprueba la acción más específica primero.
+                // Solo permitir inicio/fin en celdas transitables
                 if (e.isShiftDown() && SwingUtilities.isLeftMouseButton(e)) {
-                    endPoint = new Point(col, row);
+                    if (mazeData[row][col] == 1) {
+                        endPoint = new Point(col, row);
+                    } else {
+                        JOptionPane.showMessageDialog(MazePanel.this, "El punto de fin debe estar en una celda transitable.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else if (SwingUtilities.isRightMouseButton(e)) {
-                    startPoint = new Point(col, row);
+                    if (mazeData[row][col] == 1) {
+                        startPoint = new Point(col, row);
+                    } else {
+                        JOptionPane.showMessageDialog(MazePanel.this, "El punto de inicio debe estar en una celda transitable.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else if (SwingUtilities.isLeftMouseButton(e)) {
                     mazeData[row][col] = (mazeData[row][col] == 1) ? 0 : 1;
                 } else if (SwingUtilities.isMiddleMouseButton(e)) {
-                    endPoint = new Point(col, row);
+                    if (mazeData[row][col] == 1) {
+                        endPoint = new Point(col, row);
+                    } else {
+                        JOptionPane.showMessageDialog(MazePanel.this, "El punto de fin debe estar en una celda transitable.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
                 repaint(); // Vuelve a dibujar el panel para reflejar los cambios
             }
@@ -179,16 +191,6 @@ public class MazePanel extends JPanel {
         if (path != null) {
             this.finalPath = new ArrayList<>(path);
         }
-     * Actualiza los datos del laberinto y redibuja el panel.
-     * @param mazeData una matriz de enteros que representa el nuevo laberinto.
-     */
-    public void setMazeData(int[][] mazeData) {
-        if (mazeData == null || mazeData.length == 0) return;
-        this.rows = mazeData.length;
-        this.cols = mazeData[0].length;
-        this.mazeData = mazeData;
-        setPreferredSize(new Dimension(cols * CELL_SIZE, rows * CELL_SIZE));
-        revalidate();
         repaint();
     }
 
@@ -197,7 +199,11 @@ public class MazePanel extends JPanel {
      * @param path una lista de coordenadas [fila, columna].
      */
     public void setPath(List<int[]> path) {
-        this.path = path;
+        if (path != null) {
+            this.finalPath = new ArrayList<>(path);
+        } else {
+            this.finalPath.clear();
+        }
         repaint();
     }
 
@@ -215,10 +221,14 @@ public class MazePanel extends JPanel {
         if (path != null) {
             this.finalPath = new ArrayList<>(path);
         }
+        repaint();
+    }
+
+    /**
      * Limpia cualquier ruta previamente dibujada en el panel.
      */
     public void clearPath() {
-        this.path = null;
+        this.finalPath.clear();
         repaint();
     }
 
@@ -232,28 +242,19 @@ public class MazePanel extends JPanel {
         if (path == null || path.isEmpty()) return;
 
         final List<int[]> pathToAnimate = new ArrayList<>(path);
-        finalPath.clear(); // Se construirá esta lista paso a paso
+        finalPath.clear();
 
         animationTimer = new Timer(50, e -> {
             if (finalPath.size() < pathToAnimate.size()) {
                 finalPath.add(pathToAnimate.get(finalPath.size()));
                 repaint();
             } else {
-                ((Timer) e.getSource()).stop(); // Detiene el timer al finalizar
-     * Restablece el laberinto a su estado inicial: todas las celdas transitables
-     * y sin puntos de inicio, fin o ruta.
-     */
-    public void clearMaze() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                mazeData[i][j] = 1; // Todo transitable
+                ((Timer) e.getSource()).stop();
             }
         });
         animationTimer.start();
     }
 
-
-    // --- MÉTODOS EXISTENTES ---
 
     /**
      * Actualiza los datos del laberinto y redibuja el panel.

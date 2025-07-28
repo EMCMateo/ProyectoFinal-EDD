@@ -5,11 +5,6 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Clase que implementa algoritmos recursivos para encontrar rutas en un laberinto.
- * Incluye versiones con 2 y 4 direcciones, y una variante con backtracking.
- * Se deja estructura para considerar programación dinámica (memoización/tabulación).
- */
 public class SolverRecursivo {
     private Map<String, Boolean> memo = new HashMap<>();
 
@@ -17,154 +12,129 @@ public class SolverRecursivo {
     private static final int[] dx2 = {0, 1};
     private static final int[] dy2 = {1, 0};
 
-    // Movimientos para 4 direcciones: derecha, izquierda, abajo, arriba
+    // Movimientos para 4 direcciones
     private static final int[] dx4 = {0, 0, 1, -1};
     private static final int[] dy4 = {1, -1, 0, 0};
 
     private boolean[][] visitado;
-    private List<int[]> rutaActual = new ArrayList<>();
-    private List<int[]> mejorRuta = new ArrayList<>();
+    private List<int[]> rutaActual;
+    private List<int[]> mejorRuta;
 
-    /**
-     * Busca una ruta del inicio al fin moviéndose solo a la derecha o abajo.
-     * @param laberinto Matriz del laberinto (1 = libre, 0 = muro)
-     * @param x Fila inicial
-     * @param y Columna inicial
-     * @param finX Fila destino
-     * @param finY Columna destino
-     * @return Lista con la mejor ruta encontrada (como pares [x, y])
-     */
-    public List<int[]> resolver2Direcciones(int[][] laberinto, int x, int y, int finX, int finY) {
+    private void inicializar(int[][] laberinto) {
         visitado = new boolean[laberinto.length][laberinto[0].length];
-        rutaActual.clear();
-        mejorRuta.clear();
-        backtrack2(laberinto, x, y, finX, finY);
+        rutaActual = new ArrayList<>();
+        mejorRuta = new ArrayList<>();
+    }
+
+    public List<int[]> resolver2Direcciones(int[][] laberinto, int fila, int col, int finFila, int finCol) {
+        inicializar(laberinto);
+        // Validación especial: solo puede ir a la derecha y abajo
+        if (finFila < fila || finCol < col) return new ArrayList<>();
+        backtrack2(laberinto, fila, col, finFila, finCol);
         return mejorRuta;
     }
 
     private void backtrack2(int[][] lab, int x, int y, int fx, int fy) {
         if (!esValido(lab, x, y) || visitado[x][y]) return;
+        visitado[x][y] = true;
         rutaActual.add(new int[]{x, y});
         if (x == fx && y == fy) {
-            mejorRuta = new ArrayList<>(rutaActual);
+            if (mejorRuta.isEmpty() || rutaActual.size() < mejorRuta.size()) {
+                mejorRuta = new ArrayList<>(rutaActual);
+            }
         } else {
-            visitado[x][y] = true;
             for (int i = 0; i < 2; i++) {
                 backtrack2(lab, x + dx2[i], y + dy2[i], fx, fy);
             }
-            visitado[x][y] = false;
         }
         rutaActual.remove(rutaActual.size() - 1);
+        visitado[x][y] = false;
     }
 
-    /**
-     * Busca una ruta del inicio al fin moviéndose en 4 direcciones (sin backtracking completo).
-     * @param laberinto Matriz del laberinto (1 = libre, 0 = muro)
-     * @param x Fila inicial
-     * @param y Columna inicial
-     * @param finX Fila destino
-     * @param finY Columna destino
-     * @return Lista con la mejor ruta encontrada (como pares [x, y])
-     */
-    public List<int[]> resolver4Direcciones(int[][] laberinto, int x, int y, int finX, int finY) {
-        visitado = new boolean[laberinto.length][laberinto[0].length];
-        rutaActual.clear();
-        mejorRuta.clear();
-        backtrack4(laberinto, x, y, finX, finY);
+    public List<int[]> resolver4Direcciones(int[][] laberinto, int fila, int col, int finFila, int finCol) {
+        inicializar(laberinto);
+        backtrack4(laberinto, fila, col, finFila, finCol);
         return mejorRuta;
     }
 
     private void backtrack4(int[][] lab, int x, int y, int fx, int fy) {
         if (!esValido(lab, x, y) || visitado[x][y]) return;
+        visitado[x][y] = true;
         rutaActual.add(new int[]{x, y});
         if (x == fx && y == fy) {
-            mejorRuta = new ArrayList<>(rutaActual);
+            if (mejorRuta.isEmpty() || rutaActual.size() < mejorRuta.size()) {
+                mejorRuta = new ArrayList<>(rutaActual);
+            }
         } else {
-            visitado[x][y] = true;
             for (int i = 0; i < 4; i++) {
                 backtrack4(lab, x + dx4[i], y + dy4[i], fx, fy);
             }
-            visitado[x][y] = false;
         }
         rutaActual.remove(rutaActual.size() - 1);
+        visitado[x][y] = false;
     }
 
-    /**
-     * Busca la ruta más corta usando backtracking completo en 4 direcciones.
-     * @param laberinto Matriz del laberinto (1 = libre, 0 = muro)
-     * @param x Fila inicial
-     * @param y Columna inicial
-     * @param finX Fila destino
-     * @param finY Columna destino
-     * @return Lista con la mejor ruta encontrada (como pares [x, y])
-     */
-    public List<int[]> resolverBacktracking(int[][] laberinto, int x, int y, int finX, int finY) {
-        visitado = new boolean[laberinto.length][laberinto[0].length];
-        mejorRuta.clear();
-        backtrackCompleto(laberinto, x, y, finX, finY, new ArrayList<>());
+    public List<int[]> resolverBacktracking(int[][] laberinto, int fila, int col, int finFila, int finCol) {
+        inicializar(laberinto);
+        int maxLargo = laberinto.length * laberinto[0].length + 1;
+        backtrackCompletoPodado(laberinto, fila, col, finFila, finCol, new ArrayList<>(), maxLargo);
         return mejorRuta;
     }
 
-    private void backtrackCompleto(int[][] lab, int x, int y, int fx, int fy, List<int[]> camino) {
+    private void backtrackCompletoPodado(int[][] lab, int x, int y, int fx, int fy, List<int[]> camino, int maxLargo) {
         if (!esValido(lab, x, y) || visitado[x][y]) return;
+        if (camino.size() >= maxLargo) return; // Poda: si ya es más largo que el mejor, no seguir
+        visitado[x][y] = true;
         camino.add(new int[]{x, y});
         if (x == fx && y == fy) {
             if (mejorRuta.isEmpty() || camino.size() < mejorRuta.size()) {
                 mejorRuta = new ArrayList<>(camino);
+                // Actualiza el máximo permitido para podar ramas más largas
+                maxLargo = mejorRuta.size();
             }
         } else {
-            visitado[x][y] = true;
             for (int i = 0; i < 4; i++) {
-                backtrackCompleto(lab, x + dx4[i], y + dy4[i], fx, fy, camino);
+                backtrackCompletoPodado(lab, x + dx4[i], y + dy4[i], fx, fy, camino, maxLargo);
             }
-            visitado[x][y] = false;
         }
         camino.remove(camino.size() - 1);
+        visitado[x][y] = false;
     }
 
-    /**
-     * Método auxiliar para validar si una celda es transitable.
-     */
+    public List<int[]> resolverBacktrackingConMemo(int[][] laberinto, int fila, int col, int finFila, int finCol) {
+        inicializar(laberinto);
+        memo.clear();
+        backtrackConMemo(laberinto, fila, col, finFila, finCol, new ArrayList<>());
+        return mejorRuta;
+    }
+
+    private boolean backtrackConMemo(int[][] lab, int x, int y, int fx, int fy, List<int[]> camino) {
+        String key = x + "," + y;
+        if (memo.containsKey(key)) return memo.get(key);
+        if (!esValido(lab, x, y) || visitado[x][y]) return false;
+
+        visitado[x][y] = true;
+        camino.add(new int[]{x, y});
+
+        boolean found = false;
+        if (x == fx && y == fy) {
+            mejorRuta = new ArrayList<>(camino);
+            found = true;
+        } else {
+            for (int i = 0; i < 4; i++) {
+                if (backtrackConMemo(lab, x + dx4[i], y + dy4[i], fx, fy, camino)) {
+                    found = true;
+                }
+            }
+        }
+
+        visitado[x][y] = false;
+        camino.remove(camino.size() - 1);
+        memo.put(key, found);
+        return found;
+    }
+
     private boolean esValido(int[][] lab, int x, int y) {
         return x >= 0 && y >= 0 && x < lab.length && y < lab[0].length && lab[x][y] == 1;
     }
-
-    /**
- * Variante de backtracking con memoización (programación dinámica).
- * Guarda los caminos que ya han sido intentados para no repetirlos.
- */
-public List<int[]> resolverBacktrackingConMemo(int[][] laberinto, int x, int y, int finX, int finY) {
-    visitado = new boolean[laberinto.length][laberinto[0].length];
-    mejorRuta.clear();
-    memo.clear(); // Limpiar caché antes de cada ejecución
-    backtrackConMemo(laberinto, x, y, finX, finY, new ArrayList<>());
-    return mejorRuta;
-}
-
-private boolean backtrackConMemo(int[][] lab, int x, int y, int fx, int fy, List<int[]> camino) {
-    String key = x + "," + y;
-    if (memo.containsKey(key)) return memo.get(key);
-    if (!esValido(lab, x, y) || visitado[x][y]) return false;
-
-    camino.add(new int[]{x, y});
-    if (x == fx && y == fy) {
-        if (mejorRuta.isEmpty() || camino.size() < mejorRuta.size()) {
-            mejorRuta = new ArrayList<>(camino);
-        }
-        camino.remove(camino.size() - 1);
-        return true;
-    }
-
-    visitado[x][y] = true;
-    boolean encontrado = false;
-    for (int i = 0; i < 4; i++) {
-        if (backtrackConMemo(lab, x + dx4[i], y + dy4[i], fx, fy, camino)) {
-            encontrado = true;
-        }
-    }
-    visitado[x][y] = false;
-    camino.remove(camino.size() - 1);
-    memo.put(key, encontrado);
-    return encontrado;
-}
 }

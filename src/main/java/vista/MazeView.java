@@ -32,12 +32,13 @@ public class MazeView extends JFrame {
         setTitle("Solucionador de Laberintos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
+        setSize(500, 800);
 
         // 1. Crear la barra de menú
         createMenuBar();
 
         // 2. Crear instancias de los paneles
-        mazePanel = new MazePanel(20, 20);
+        mazePanel = new MazePanel(8, 8);
         controlPanel = new ControlPanel();
 
         // 3. Añadirlos a la ventana

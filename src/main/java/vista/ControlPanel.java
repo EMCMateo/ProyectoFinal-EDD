@@ -27,6 +27,7 @@ public class ControlPanel extends JPanel {
     private JButton solveButton;
     private JButton showFullPathButton;
     private JButton stepByStepButton;
+    private JButton clearAllButton;
 
     /**
      * Construye el panel de control, inicializando y organizando todos
@@ -42,8 +43,8 @@ public class ControlPanel extends JPanel {
         JPanel configPanel = new JPanel(new GridLayout(0, 2, 5, 5));
         configPanel.setBorder(new TitledBorder("Configuración"));
 
-        rowsField = new JTextField("20");
-        colsField = new JTextField("20");
+        rowsField = new JTextField("8");
+        colsField = new JTextField("8");
         generateButton = new JButton("Generar/Limpiar");
 
         configPanel.add(new JLabel("Filas:"));
@@ -68,10 +69,12 @@ public class ControlPanel extends JPanel {
         solveButton = new JButton("¡Resolver!"); // Botón original
         showFullPathButton = new JButton("Mostrar Camino Completo");
         stepByStepButton = new JButton("Resolver Paso a Paso");
+        clearAllButton = new JButton("Borrar Todo");
 
         actionButtonsPanel.add(solveButton);
         actionButtonsPanel.add(showFullPathButton);
         actionButtonsPanel.add(stepByStepButton);
+        actionButtonsPanel.add(clearAllButton);
 
         algoPanel.add(actionButtonsPanel, BorderLayout.CENTER); // Se añaden al centro
 
@@ -172,5 +175,14 @@ public class ControlPanel extends JPanel {
      */
     public void addStepByStepListener(ActionListener listener) {
         stepByStepButton.addActionListener(listener);
+    }
+
+    /**
+     * Añade un listener para el evento de clic en el botón "Borrar Todo".
+     *
+     * @param listener El ActionListener a ejecutar.
+     */
+    public void addClearAllListener(ActionListener listener) {
+        clearAllButton.addActionListener(listener);
     }
 }

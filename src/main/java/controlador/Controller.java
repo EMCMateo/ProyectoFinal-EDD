@@ -34,6 +34,7 @@ public class Controller {
         // La vista ya no maneja la lógica, solo notifica al controlador.
         view.getControlPanel().addGenerateListener(e -> generateNewMaze());
         view.getControlPanel().addSolveListener(e -> solveMaze());
+        view.getControlPanel().addClearAllListener(e -> clearAll());
 
         view.addListResultsListener(e -> view.showResultsTable());
         view.addShowTimesChartListener(e -> view.showTimesChart());
@@ -54,6 +55,8 @@ public class Controller {
      * Orquesta todo el proceso de resolución del laberinto.
      */
     private void solveMaze() {
+        // Limpiar visualización antes de resolver con otro método
+        view.getMazePanel().clearVisuals();
         // 1. Recoger datos de la Vista
         int[][] mazeData = view.getMazePanel().getMazeData();
         Point startPoint = view.getMazePanel().getStartPoint();
@@ -64,6 +67,19 @@ public class Controller {
         if (startPoint == null || endPoint == null) {
             view.showError("Por favor, defina un punto de inicio (clic derecho) y un punto de fin (Shift + clic izquierdo).");
             return;
+        }
+
+        if (mazeData[startPoint.y][startPoint.x] == 0 || mazeData[endPoint.y][endPoint.x] == 0) {
+            view.showError("El punto de inicio o fin está en un muro.");
+            return;
+        }
+
+        // Validación especial para recursivo 2 direcciones
+        if (algorithm != null && algorithm.contains("2 dir")) {
+            if (endPoint.y < startPoint.y || endPoint.x < startPoint.x) {
+                view.showError("El método recursivo de 2 direcciones solo funciona si el destino está a la derecha y abajo del inicio.");
+                return;
+            }
         }
 
         // 3. Preparar datos, ejecutar el algoritmo y medir el tiempo
@@ -119,17 +135,22 @@ public class Controller {
                 List<Celda> dfsPath = dfs.buscarRuta(laberinto, inicio, fin);
                 return convertCeldaPathToIntArrayPath(dfsPath);
 
+            // En método findPath(), actualiza así las llamadas a SolverRecursivo:
             case "Recursivo (2 dir)":
                 SolverRecursivo rec2 = new SolverRecursivo();
-                return rec2.resolver2Direcciones(mazeData, startPoint.y, startPoint.x, endPoint.y, endPoint.x);
+                List<int[]> res2 = rec2.resolver2Direcciones(mazeData, startPoint.y, startPoint.x, endPoint.y, endPoint.x);
+                return res2 != null ? res2 : new ArrayList<>();
 
             case "Recursivo (4 dir)":
                 SolverRecursivo rec4 = new SolverRecursivo();
-                return rec4.resolver4Direcciones(mazeData, startPoint.y, startPoint.x, endPoint.y, endPoint.x);
+                List<int[]> res4 = rec4.resolver4Direcciones(mazeData, startPoint.y, startPoint.x, endPoint.y, endPoint.x);
+                return res4 != null ? res4 : new ArrayList<>();
 
             case "Backtracking":
                 SolverRecursivo backtrack = new SolverRecursivo();
-                return backtrack.resolverBacktracking(mazeData, startPoint.y, startPoint.x, endPoint.y, endPoint.x);
+                List<int[]> bt = backtrack.resolverBacktracking(mazeData, startPoint.y, startPoint.x, endPoint.y, endPoint.x);
+                return bt != null ? bt : new ArrayList<>();
+
 
             default:
                 return new ArrayList<>();
@@ -146,5 +167,10 @@ public class Controller {
         return celdaPath.stream()
                 .map(c -> new int[]{c.getFila(), c.getColumna()})
                 .collect(Collectors.toList());
+    }
+
+    private void clearAll() {
+        view.getMazePanel().clearMaze();
+        view.getControlPanel().setResultsText("");
     }
 }
