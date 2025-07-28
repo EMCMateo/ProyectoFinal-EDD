@@ -14,7 +14,7 @@ public class MazeView extends JFrame {
 
     private MazePanel mazePanel;
     private ControlPanel controlPanel;
-    // private Controller controller; // El Estudiante 4 conectará esto
+
 
     public MazeView() {
         setTitle("Solucionador de Laberintos");
