@@ -73,7 +73,7 @@ public class MazeView extends JFrame {
         });
     }
 
-    // --- Métodos públicos para que el Controlador actualice la vista ---
+    // --- Métodos públicos para que el Controlador actualice la vista --
 
     public void drawPath(List<int[]> path) {
         mazePanel.setPath(path);
