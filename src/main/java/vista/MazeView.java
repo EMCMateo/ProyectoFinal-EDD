@@ -16,6 +16,22 @@ public class MazeView extends JFrame {
     private ControlPanel controlPanel;
 
 
+    public MazePanel getMazePanel() {
+        return mazePanel;
+    }
+
+    public void setMazePanel(MazePanel mazePanel) {
+        this.mazePanel = mazePanel;
+    }
+
+    public ControlPanel getControlPanel() {
+        return controlPanel;
+    }
+
+    public void setControlPanel(ControlPanel controlPanel) {
+        this.controlPanel = controlPanel;
+    }
+
     public MazeView() {
         setTitle("Solucionador de Laberintos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,5 +101,12 @@ public class MazeView extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MazeView::new);
+    }
+
+    public void showError(String messaje){
+        JOptionPane.showMessageDialog(this, messaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    public void clearPath(){
+        mazePanel.clearPath();
     }
 }
