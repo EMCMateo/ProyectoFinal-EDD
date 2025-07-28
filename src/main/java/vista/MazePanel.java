@@ -1,4 +1,3 @@
-// /src/main/java/vista/MazePanel.java
 package vista;
 
 import javax.swing.*;
@@ -8,9 +7,12 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 /**
- * Panel que se encarga de dibujar el laberinto, incluyendo celdas,
- * muros, puntos de inicio/fin y la ruta de la solución.
- * También gestiona la interacción del usuario con el ratón.
+ * Panel que se encarga de dibujar el laberinto, incluyendo celdas, muros,
+ * puntos de inicio/fin y la ruta de la solución. También gestiona la
+ * interacción del usuario con el ratón.
+ *
+ * @author Israel Orellana
+ * @version 1.0
  */
 public class MazePanel extends JPanel {
     private int rows;
@@ -20,8 +22,15 @@ public class MazePanel extends JPanel {
     private Point startPoint;
     private Point endPoint;
 
+    /** El tamaño en píxeles de cada celda del laberinto. */
     private final int CELL_SIZE = 25;
 
+    /**
+     * Construye el panel del laberinto con un tamaño inicial.
+     *
+     * @param rows El número inicial de filas.
+     * @param cols El número inicial de columnas.
+     */
     public MazePanel(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
@@ -32,6 +41,10 @@ public class MazePanel extends JPanel {
         addMouseListeners();
     }
 
+    /**
+     * Añade los listeners del ratón para permitir la interacción del usuario
+     * con el laberinto (dibujar muros, seleccionar inicio/fin).
+     */
     private void addMouseListeners() {
         addMouseListener(new MouseAdapter() {
             @Override
@@ -66,6 +79,12 @@ public class MazePanel extends JPanel {
         });
     }
 
+    /**
+     * Dibuja todos los componentes del laberinto: celdas, muros, cuadrícula,
+     * ruta de solución y puntos de inicio/fin.
+     *
+     * @param g el contexto gráfico en el que se va a dibujar.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -103,6 +122,10 @@ public class MazePanel extends JPanel {
         }
     }
 
+    /**
+     * Actualiza los datos del laberinto y redibuja el panel.
+     * @param mazeData una matriz de enteros que representa el nuevo laberinto.
+     */
     public void setMazeData(int[][] mazeData) {
         if (mazeData == null || mazeData.length == 0) return;
         this.rows = mazeData.length;
@@ -113,16 +136,27 @@ public class MazePanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Establece la ruta de la solución para ser dibujada.
+     * @param path una lista de coordenadas [fila, columna].
+     */
     public void setPath(List<int[]> path) {
         this.path = path;
         repaint();
     }
 
+    /**
+     * Limpia cualquier ruta previamente dibujada en el panel.
+     */
     public void clearPath() {
         this.path = null;
         repaint();
     }
 
+    /**
+     * Restablece el laberinto a su estado inicial: todas las celdas transitables
+     * y sin puntos de inicio, fin o ruta.
+     */
     public void clearMaze() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
