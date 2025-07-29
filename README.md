@@ -1,3 +1,5 @@
+![img_5.png](img_5.png)
+
 # 🧩 Solucionador de Laberintos con Algoritmos de Búsqueda
 
 ## 📌 Información General
@@ -168,9 +170,12 @@ java -jar target/solucionador-laberintos.jar
 
 ## 📈 Diagrama de Clases
 
-> *(Insertar aquí imagen del diagrama si se tiene en formato visual)*
-> Las clases del modelo representan la lógica de laberintos y algoritmos.
-> Controller actúa como puente entre las vistas Swing y los modelos de resolución.
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
+
 
 ---
 
