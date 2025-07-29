@@ -42,32 +42,37 @@ La lógica de proyecto y las estructuras de datos centrales del mismo.
 
 *   **`SolverRecursivo.java`**: Implementa la resolución de laberintos mediante **backtracking recursivo**. Esta clase explora sistemáticamente todas las rutas posibles desde el punto de inicio. A través de la recursión, avanza por un camino y, si llega a un punto muerto o al final, retrocede para probar otras alternativas. Está diseñado para encontrar la ruta más corta explorando todas las opciones y guardando la mejor encontrada. También registra todas las celdas que visita.
 
----
-📁 Estructura del Proyecto
-.
-├── pom.xml                                 # Archivo de configuración de Maven con dependencias
-├── resultados_laberinto.csv                # Archivo de salida con los resultados de las ejecuciones
-└── src/
-    └── main/
-        └── java/
-            ├── App.java                      # Clase principal que inicia la aplicación
-            ├── controlador/
-            │   └── Controller.java           # Conecta la vista con el modelo (lógica de control)
-            ├── modelo/
-            │   ├── Celda.java                # Representa una celda individual del laberinto
-            │   ├── Laberinto.java            # Representa la estructura completa del laberinto
-            │   ├── SolverBFS.java            # Implementación del algoritmo BFS
-            │   ├── SolverDFS.java            # Implementación del algoritmo DFS
-            │   └── SolverRecursivo.java      # Implementación de backtracking recursivo
-            ├── util/
-            │   └── CSVLogger.java            # Utilidad para escribir resultados en un archivo CSV
-            └── vista/
-                ├── ControlPanel.java         # Panel con botones, selectores y área de resultados
-                ├── MazePanel.java            # Panel donde se dibuja interactivamente el laberinto
-                ├── MazeView.java             # Ventana principal de la aplicación (JFrame)
-                └── TimesChartView.java       # Ventana para mostrar la gráfica de tiempos
 
 ---
+
+
+📁 Estructura del Proyecto
+.
+├── pom.xml # Archivo de configuración de Maven con dependencias
+├── resultados_laberinto.csv # Archivo de salida con los resultados de las ejecuciones
+└── src/
+└── main/
+└── java/
+├── App.java # Clase principal que inicia la aplicación
+├── controlador/
+│ └── Controller.java # Conecta la vista con el modelo (lógica de control)
+├── modelo/
+│ ├── Celda.java # Representa una celda individual del laberinto
+│ ├── Laberinto.java # Representa la estructura completa del laberinto
+│ ├── SolverBFS.java # Implementación del algoritmo BFS
+│ ├── SolverDFS.java # Implementación del algoritmo DFS
+│ └── SolverRecursivo.java # Implementación de backtracking recursivo
+├── util/
+│ └── CSVLogger.java # Utilidad para escribir resultados en un archivo CSV
+└── vista/
+├── ControlPanel.java # Panel con botones, selectores y área de resultados
+├── MazePanel.java # Panel donde se dibuja interactivamente el laberinto
+├── MazeView.java # Ventana principal de la aplicación (JFrame)
+└── TimesChartView.java # Ventana para mostrar la gráfica de tiempos
+
+---
+
+
 📊 Tabla Comparativa de Complejidad
 
 | Algoritmo                        | Tiempo Peor Caso     | Espacio Peor Caso    | ¿Garantiza la Ruta más Corta? |
