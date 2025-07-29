@@ -1,144 +1,200 @@
-# Solucionador de Laberintos con Algoritmos de Búsqueda
+# 🧩 Solucionador de Laberintos con Algoritmos de Búsqueda
 
-📌 **Información General**
-*   **Título**: Implementación y Comparación Visual de Algoritmos de Búsqueda en Laberintos
-*   **Asignatura**: Estructura de Datos
-*   **Carrera**: Computación
-*   **Estudiantes**: Einar Kaalhus, Israel Orellana, Juan Pablo Ortiz y Mateo Molina
-*   **Fecha**: 28 de Julio del 2024
-*   **Profesor**: Ing. Pablo Torres
+## 📌 Información General
 
----
-
-🛠️ **Descripción**
-Este proyecto implementa y demuestra visualmente diferentes algoritmos de estructra de datos para la búsqueda y resolución de laberintos. La aplicación permite a los usuarios crear laberintos de forma interactiva, poner el inicio, fin y muros, seleccionar un algoritmo de resolución y observar su comportamiento en tiempo real.
-
-Los algoritmos implementados son:
-*   **Búsqueda en Amplitud (BFS)**: Encuentra la ruta más corta.
-*   **Búsqueda en Profundidad (DFS)**: Encuentra una ruta, no necesariamente la más corta.
-*   **Backtracking Recursivo(2 direcciones y 4 direcciones)**: Un enfoque recursivo que explora todas las posibilidades para encontrar la ruta óptima.
-
-El sistema incluye:
-*   Una interfaz gráfica de usuario (GUI) construida con **Java Swing**.
-*   Funcionalidad para dibujar muros y establecer puntos de inicio y fin.
-*   Visualización diferenciada para las **celdas exploradas** (gris) y la **ruta final** (azul/naranja).
-*   Modo de ejecución **paso a paso** para analizar el comportamiento del algoritmo.
-*   Registro de resultados (tiempo, longitud de la ruta) en un archivo **CSV**.
-*   Una gráfica de comparación de tiempos de ejecución generada con **JFreeChart**.
+* **Título:** Implementación y Comparación Visual de Algoritmos de Búsqueda en Laberintos
+* **Asignatura:** Estructura de Datos
+* **Carrera:** Computación
+* **Estudiantes:** Einar Kaalhus, Israel Orellana, Juan Pablo Ortiz y Mateo Molina
+* **Fecha:** 28 de Julio del 2024
+* **Profesor:** Ing. Pablo Torres
 
 ---
 
-### 📖 **Descripción de Clases del Paquete `modelo`**
+## 📋 Índice
 
-La lógica de proyecto y las estructuras de datos centrales del mismo.
-
-*   **`Celda.java`**: Representa una celda individual en la cuadrícula del laberinto. Cada objeto `Celda` almacena sus coordenadas (fila y columna) y un estado booleano (`transitable`) que indica si es un camino libre o un muro. Sobrescribe los métodos `equals()` y `hashCode()` para permitir su uso eficiente en colecciones como `HashSet` o como claves en un `HashMap`.
-
-*   **`Laberinto.java`**: Modela la estructura completa del laberinto como una matriz bidimensional de objetos `Celda`. Esta clase se encarga de inicializar la cuadrícula, gestionar sus dimensiones y proporcionar métodos para establecer qué celdas son muros y cuáles son transitables.
-
-*   **`SolverBFS.java`**: Implementa el algoritmo de **Búsqueda en Amplitud (BFS)**. Utiliza una cola (`Queue`) para explorar el laberinto nivel por nivel desde el punto de inicio. Este enfoque garantiza que la primera ruta encontrada hacia el destino sea la más corta en términos de número de celdas. La clase también registra todas las celdas visitadas en el proceso para su posterior visualización.
-
-*   **`SolverDFS.java`**: Implementa el algoritmo de **Búsqueda en Profundidad (DFS)** de forma iterativa. Utiliza una pila (`Stack`) para explorar una rama del laberinto tan profundamente como sea posible antes de retroceder (backtracking). Generalmente encuentra una solución más rápido que BFS en laberintos con rutas largas, pero no garantiza que sea la más corta. Al igual que BFS, almacena el recorrido de exploración.
-
-*   **`SolverRecursivo.java`**: Implementa la resolución de laberintos mediante **backtracking recursivo**. Esta clase explora sistemáticamente todas las rutas posibles desde el punto de inicio. A través de la recursión, avanza por un camino y, si llega a un punto muerto o al final, retrocede para probar otras alternativas. Está diseñado para encontrar la ruta más corta explorando todas las opciones y guardando la mejor encontrada. También registra todas las celdas que visita.
-
+1. [Descripción](#-descripción)
+2. [Objetivos](#-objetivos)
+3. [Marco Teórico](#-marco-teórico)
+4. [Estructura del Proyecto](#-estructura-del-proyecto)
+5. [Ejecución](#-ejecución)
+6. [Visualización Interactiva](#-visualización-interactiva)
+7. [Tabla Comparativa de Complejidad](#-tabla-comparativa-de-complejidad)
+8. [Conclusiones](#-conclusiones)
+9. [Recomendaciones](#-recomendaciones)
+10. [Dependencias](#-dependencias)
+11. [Repositorio](#-repositorio)
 
 ---
 
+## 🛠️ Descripción
 
-📁 Estructura del Proyecto
+Este proyecto implementa y demuestra visualmente diferentes algoritmos de búsqueda sobre laberintos. La aplicación permite:
+
+* Crear laberintos manualmente.
+* Establecer celdas de inicio, fin y muros.
+* Seleccionar entre varios algoritmos y observar su comportamiento paso a paso.
+* Visualizar rutas exploradas y soluciones.
+* Registrar métricas de rendimiento y generar gráficos comparativos.
+
+### Algoritmos implementados:
+
+* **BFS (Búsqueda en Amplitud):** Encuentra la ruta más corta garantizada.
+* **DFS (Búsqueda en Profundidad):** Explora profundamente, pero no garantiza la mejor ruta.
+* **Backtracking Recursivo (2 y 4 direcciones):** Explora todas las rutas posibles para hallar la óptima.
+
+---
+
+## 🎯 Objetivos
+
+### Objetivo General
+
+Desarrollar una herramienta interactiva en Java para demostrar y comparar visualmente algoritmos clásicos de búsqueda de caminos en laberintos, bajo el patrón MVC.
+
+### Objetivos Específicos
+
+* Implementar los algoritmos BFS, DFS y Backtracking.
+* Diseñar una GUI intuitiva con Java Swing.
+* Ofrecer retroalimentación visual clara.
+* Incluir ejecución paso a paso.
+* Registrar métricas en archivos CSV.
+* Visualizar datos con gráficos mediante JFreeChart.
+
+---
+
+## 📖 Marco Teórico
+
+### Modelado del Laberinto como Grafo
+
+Cada celda transitable es un nodo. Las conexiones entre celdas son aristas. Los muros son la ausencia de conexiones.
+
+### BFS (Breadth-First Search)
+
+* Explora en niveles (cola FIFO).
+* Garantiza la ruta más corta.
+* **Complejidad:** O(V + E)
+
+### DFS (Depth-First Search)
+
+* Explora profundamente (pila).
+* Más rápida, pero no garantiza óptimo.
+* **Complejidad:** O(V + E)
+
+### Backtracking Recursivo
+
+* Explora exhaustivamente todas las rutas.
+* Puede encontrar la mejor, pero es costoso.
+* **Complejidad:** Exponencial (≈ O(4ⁿ))
+
+### Arquitectura MVC
+
+* **Modelo:** Lógica y estructuras (Celda, Laberinto, Solver).
+* **Vista:** GUI con Swing (paneles, gráficos).
+* **Controlador:** Conecta acciones del usuario con el modelo y vista.
+
+### JFreeChart y JCommon
+
+* **jfreechart.jar:** Generación de gráficos de líneas.
+* **jcommon.jar:** Utilidades complementarias.
+* Permiten graficar resultados de los algoritmos desde archivos CSV.
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
 .
-├── pom.xml # Archivo de configuración de Maven con dependencias
-├── resultados_laberinto.csv # Archivo de salida con los resultados de las ejecuciones
+├── pom.xml                       # Configuración Maven
+├── resultados_laberinto.csv     # Registro de tiempos y longitudes
 └── src/
-└── main/
-└── java/
-├── App.java # Clase principal que inicia la aplicación
-├── controlador/
-│ └── Controller.java # Conecta la vista con el modelo (lógica de control)
-├── modelo/
-│ ├── Celda.java # Representa una celda individual del laberinto
-│ ├── Laberinto.java # Representa la estructura completa del laberinto
-│ ├── SolverBFS.java # Implementación del algoritmo BFS
-│ ├── SolverDFS.java # Implementación del algoritmo DFS
-│ └── SolverRecursivo.java # Implementación de backtracking recursivo
-├── util/
-│ └── CSVLogger.java # Utilidad para escribir resultados en un archivo CSV
-└── vista/
-├── ControlPanel.java # Panel con botones, selectores y área de resultados
-├── MazePanel.java # Panel donde se dibuja interactivamente el laberinto
-├── MazeView.java # Ventana principal de la aplicación (JFrame)
-└── TimesChartView.java # Ventana para mostrar la gráfica de tiempos
+    └── main/
+        └── java/
+            ├── App.java
+            ├── controlador/
+            │   └── Controller.java
+            ├── modelo/
+            │   ├── Celda.java
+            │   ├── Laberinto.java
+            │   ├── SolverBFS.java
+            │   ├── SolverDFS.java
+            │   └── SolverRecursivo.java
+            ├── util/
+            │   └── CSVLogger.java
+            └── vista/
+                ├── ControlPanel.java
+                ├── MazePanel.java
+                ├── MazeView.java
+                └── TimesChartView.java
+```
 
 ---
 
+## 🚀 Ejecución
 
-📊 Tabla Comparativa de Complejidad
+### Requisitos:
 
-| Algoritmo                        | Tiempo Peor Caso     | Espacio Peor Caso    | ¿Garantiza la Ruta más Corta? |
-| :------------------------------ | :------------------: | :------------------: | :----------------------------: |
-| BFS (Búsqueda en Amplitud)      | O(R * C)             | O(R * C)             | Sí                            |
-| DFS (Búsqueda en Profundidad)   | O(R * C)             | O(R * C)             | No                            |
-| Backtracking (Exhaustivo)       | O(4<sup>R×C</sup>)*  | O(R * C)             | Sí                            |
+* Java JDK 11 o superior
+* Apache Maven
 
----
+### Instrucciones:
 
-🚀 **Ejecución**
-Para ejecutar el proyecto, asegúrate de tener el siguiente software instalado:
-*   Java JDK 11 o superior
-*   Apache Maven
-*   
----
-### Funcionalidades Implementadas
-
-#### Búsqueda en Amplitud (BFS)
-
-- Utiliza una `Queue` para explorar los nodos vecinos.
-- Garantiza la ruta más corta en un laberinto sin pesos.
-- **Complejidad:** `O(V + E)`, donde `V` es el número de celdas y `E` el número de conexiones.
-
-#### Búsqueda en Profundidad (DFS)
-
-- Utiliza una `Stack` para profundizar en los caminos.
-- Encuentra una ruta rápidamente, pero no necesariamente la óptima.
-- **Complejidad:** `O(V + E)`.
-
-#### Backtracking Recursivo
-
-- Explora todas las rutas posibles de forma recursiva.
-- Encuentra la ruta más corta mediante exploración exhaustiva.
-- **Complejidad:** puede ser exponencial en el peor de los casos, pero se optimiza con técnicas de "poda" (*pruning*).
-
-#### Visualización Interactiva
-
-- Permite al usuario ver cómo cada algoritmo procesa el laberinto coloreando las celdas exploradas.
-- El modo paso a paso ofrece un control detallado sobre la animación de la ruta.
+```bash
+git clone https://github.com/EMCMateo/ProyectoFinal-EDD.git
+cd ProyectoFinal-EDD
+mvn clean install
+java -jar target/solucionador-laberintos.jar
+```
 
 ---
 
-### Conclusiones
+## 👀 Visualización Interactiva
 
-La implementación de estos algoritmos en un entorno visual ofrece una comprensión profunda de sus diferencias fundamentales:
-
-- **BFS** es ideal cuando el objetivo es encontrar la ruta más corta garantizada, como en un sistema de GPS.
-- **DFS** es útil cuando cualquier ruta es aceptable y la memoria es una limitación (su versión recursiva utiliza menos memoria que BFS en laberintos con muchas ramas).
-- **Backtracking** es un ejemplo clásico de la potencia de la recursión para resolver problemas de exploración exhaustiva, siendo la base de muchos algoritmos de inteligencia artificial.
-- La **visualización interactiva** demuestra que no hay un "mejor" algoritmo universal; la elección depende de los requisitos específicos del problema: optimalidad, velocidad o uso de memoria.
+* **Celdas exploradas:** Gris
+* **Ruta final encontrada:** Azul
+* **Modo paso a paso:** Celdas naranjas
+* **Panel de control:** Selección de algoritmo, botones de ejecución y opciones
 
 ---
 
-### Dependencias
+## 📊 Tabla Comparativa de Complejidad
 
-- Java JDK 11 o superior
-- Apache Maven
-- JFreeChart: librería para la generación de gráficos (gestionada a través de `pom.xml`)
+| Algoritmo    | Tiempo Peor Caso | Espacio Peor Caso | ¿Ruta más corta? |
+| ------------ | ---------------- | ----------------- | ---------------- |
+| BFS          | O(R × C)         | O(R × C)          | ✅ Sí             |
+| DFS          | O(R × C)         | O(R × C)          | ❌ No             |
+| Backtracking | O(4^R×C)\*       | O(R × C)          | ✅ Sí             |
 
 ---
 
-### Notas Adicionales
+## 📈 Diagrama de Clases
 
-- El `Controller` sigue el patrón **Modelo-Vista-Controlador (MVC)** para separar la lógica de negocio de la interfaz gráfica.
-- La aplicación es robusta y maneja correctamente casos donde no existe una ruta posible.
-- El sistema de **logging en CSV** permite un análisis persistente y cuantitativo del rendimiento de cada algoritmo.
+> *(Insertar aquí imagen del diagrama si se tiene en formato visual)*
+> Las clases del modelo representan la lógica de laberintos y algoritmos.
+> Controller actúa como puente entre las vistas Swing y los modelos de resolución.
 
-    
+---
+
+## ✅ Conclusiones
+
+1. La visualización mejora la comprensión de los algoritmos.
+2. Cada algoritmo tiene sus ventajas según el contexto.
+3. MVC ofrece modularidad, claridad y escalabilidad.
+4. El análisis cuantitativo valida el rendimiento y comportamiento.
+
+---
+
+## 💡 Recomendaciones
+
+* Implementar algoritmos A\* y Dijkstra.
+* Agregar generación automática de laberintos.
+* Permitir guardar/cargar laberintos.
+* Incluir pruebas unitarias con JUnit.
+* Unificar salidas con una clase `AlgorithmResult`.
+
+---
+
+## 📦 Dependencias
+
+* Java JDK 11 o superior
+* Apache Maven
+* `jfreechart.jar` y `jcommon.jar` para gráficos
