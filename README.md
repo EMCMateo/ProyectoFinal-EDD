@@ -4,7 +4,7 @@
 - **Título:** Implementación de Estructuras de Datos: Matrices, Árboles y Grafos  
 - **Asignatura:** Estructura de Datos  
 - **Carrera:** Computación  
-- **Estudiantes:** [Nombre del estudiante]  
+- **Estudiantes:** Mateo Molina, Israel Orellana, Juan Ortiz y Einar Kaalhus
 - **Fecha:** 5 de julio del 2025  
 - **Profesor:** Ing. Pablo Torres  
 
@@ -12,7 +12,7 @@
 
 Este proyecto implementa y demuestra diferentes algoritmos fundamentales para la gestión y manipulación de estructuras de datos, incluyendo matrices, árboles binarios y grafos, utilizando el lenguaje Java. Entre los módulos cubiertos se encuentran:
 
-- **Manejo de Matrices:** Operaciones fundamentales de matrices (suma, multiplicación, transposición, recorrido, búsqueda).
+- **Manejo de Matrices:** Operaciones fundamentales de matrices (transposición, recorrido, búsqueda).
 - **Árboles Binarios y AVL:** Inserción, recorrido, inversión, cálculo de profundidad, auto-balanceo y visualización textual.
 - **Grafos:** Representación mediante listas de adyacencia o matrices, recorrido BFS y DFS, búsqueda de caminos, detección de ciclos, entre otros.
 - **Pruebas Unitarias:** Validación de la funcionalidad de cada estructura mediante JUnit.
@@ -78,7 +78,6 @@ src/
 ## 🧪 Funcionalidades Implementadas
 
 **1. Operaciones con Matrices**
-- Suma, resta y multiplicación de matrices
 - Transposición y recorrido de matrices
 - Búsqueda de elementos
 - Complejidad: O(n²) para operaciones básicas sobre matrices cuadradas
