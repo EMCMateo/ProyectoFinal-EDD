@@ -87,14 +87,58 @@ La lógica de proyecto y las estructuras de datos centrales del mismo.
 Para ejecutar el proyecto, asegúrate de tener el siguiente software instalado:
 *   Java JDK 11 o superior
 *   Apache Maven
+*   
+---
+### Funcionalidades Implementadas
 
-1.  **Compila el proyecto** desde la raíz del directorio:
+#### Búsqueda en Amplitud (BFS)
+
+- Utiliza una `Queue` para explorar los nodos vecinos.
+- Garantiza la ruta más corta en un laberinto sin pesos.
+- **Complejidad:** `O(V + E)`, donde `V` es el número de celdas y `E` el número de conexiones.
+
+#### Búsqueda en Profundidad (DFS)
+
+- Utiliza una `Stack` para profundizar en los caminos.
+- Encuentra una ruta rápidamente, pero no necesariamente la óptima.
+- **Complejidad:** `O(V + E)`.
+
+#### Backtracking Recursivo
+
+- Explora todas las rutas posibles de forma recursiva.
+- Encuentra la ruta más corta mediante exploración exhaustiva.
+- **Complejidad:** puede ser exponencial en el peor de los casos, pero se optimiza con técnicas de "poda" (*pruning*).
+
+#### Visualización Interactiva
+
+- Permite al usuario ver cómo cada algoritmo procesa el laberinto coloreando las celdas exploradas.
+- El modo paso a paso ofrece un control detallado sobre la animación de la ruta.
 
 ---
 
-📝 Notas Adicionales
-Todos los algoritmos incluyen validación de entrada
-Las pruebas unitarias cubren casos base y casos límite
-La visualización del árbol facilita la comprensión de la estructura
-El código sigue principios de programación orientada a objetos
+### Conclusiones
+
+La implementación de estos algoritmos en un entorno visual ofrece una comprensión profunda de sus diferencias fundamentales:
+
+- **BFS** es ideal cuando el objetivo es encontrar la ruta más corta garantizada, como en un sistema de GPS.
+- **DFS** es útil cuando cualquier ruta es aceptable y la memoria es una limitación (su versión recursiva utiliza menos memoria que BFS en laberintos con muchas ramas).
+- **Backtracking** es un ejemplo clásico de la potencia de la recursión para resolver problemas de exploración exhaustiva, siendo la base de muchos algoritmos de inteligencia artificial.
+- La **visualización interactiva** demuestra que no hay un "mejor" algoritmo universal; la elección depende de los requisitos específicos del problema: optimalidad, velocidad o uso de memoria.
+
+---
+
+### Dependencias
+
+- Java JDK 11 o superior
+- Apache Maven
+- JFreeChart: librería para la generación de gráficos (gestionada a través de `pom.xml`)
+
+---
+
+### Notas Adicionales
+
+- El `Controller` sigue el patrón **Modelo-Vista-Controlador (MVC)** para separar la lógica de negocio de la interfaz gráfica.
+- La aplicación es robusta y maneja correctamente casos donde no existe una ruta posible.
+- El sistema de **logging en CSV** permite un análisis persistente y cuantitativo del rendimiento de cada algoritmo.
+
     
